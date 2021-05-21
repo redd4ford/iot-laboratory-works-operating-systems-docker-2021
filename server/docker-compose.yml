@@ -1,0 +1,34 @@
+version: '3'
+services:
+  lab6db:
+    image: "mysql:latest"
+    restart: always
+    volumes:
+      - /var/lib/docker/volumes/mysql-db:/var/lib/mysql-db
+    environment:
+      - MYSQL_HOST=lab6db
+      - MYSQL_DATABASE=steam
+      - MYSQL_USER=SUPERUSER_NAME
+      - MYSQL_PASSWORD=SUPERUSER_PASSWORD
+      - MYSQL_ROOT_PASSWORD=ROOT_PASSWORD
+
+  lab6app:
+    build:
+      context: .
+      dockerfile: "Dockerfile"
+    image: "ubuntu:bionic"
+    restart: on-failure
+    depends_on:
+      - lab6db
+    links:
+      - lab6db
+    environment:
+      - DATABASE_HOST=lab6db
+      - DATABASE_NAME=steam
+      - DATABASE_USER=SUPERUSER_NAME
+      - DATABASE_PASSWORD=SUPERUSER_PASSWORD
+      - DATABASE_PORT=3306
+    ports:
+      - 8080:8080
+      - 9090:9090
+      - 9100:9100
