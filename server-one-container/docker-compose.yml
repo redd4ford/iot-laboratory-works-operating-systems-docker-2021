@@ -1,0 +1,18 @@
+version: '3'
+services:
+  midterm:
+    build:
+      context: .
+      dockerfile: "Dockerfile"
+    image: "ubuntu:bionic"
+    restart: on-failure
+    ports:
+      - 8080:8080
+      - 3306:3306
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/healthcheck"]
+      interval: 60s
+      timeout: 60s
+      start_period: 210s
+      retries: 5
+
