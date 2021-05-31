@@ -1,6 +1,5 @@
 USERNAME='redd4ford'
 
-touch /usr/bin/hereiam
 echo "#!/bin/sh
 while true; do
 logger \"here i am\" & sleep 10;
